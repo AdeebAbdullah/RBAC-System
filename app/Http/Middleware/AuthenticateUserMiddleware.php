@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use App\Models\Article;
 
 class AuthenticateUserMiddleware
 {
@@ -24,11 +25,12 @@ class AuthenticateUserMiddleware
             return response()->json(['error' => 'Unauthorized: Invalid header format'], 401);
         }
 
-        // check header - User 'username'
+        // header = User +space +word characters
         if(!preg_match('/^User\s+(\w+)$/', $authHeader, $matches)){
-            return response()->json(['error' => 'Unauthorized: invalid header format', 401]);
+            return response()->json(['error' => 'Unauthorized: invalid header format'], 401);
         }
 
+        //username in [1]
         $username = $matches[1];
 
         //find user in  db

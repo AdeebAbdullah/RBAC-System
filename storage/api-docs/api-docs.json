@@ -1,0 +1,178 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "RBAC System API",
+        "description": "Role-Based Access Control API Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get all articles",
+                "operationId": "11aa4cc6561a7b94c56d1201d62513ee",
+                "responses": {
+                    "200": {
+                        "description": "List of articles"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "userAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Create a new article",
+                "operationId": "e328bed23caf889ad982ad3f1180bccb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My First Article"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "This is the article body."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Article created successfully"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "userAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/articles/{id}": {
+            "delete": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Delete an article by ID",
+                "operationId": "97f34592611a1dd53a086865e29706c9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Article ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Article deleted successfully"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "userAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/health": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Health Check Endpoint",
+                "operationId": "7134f626524ee8957bd6315b959ed4e1",
+                "responses": {
+                    "200": {
+                        "description": "Returns ok:true"
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get authenticated user info",
+                "operationId": "5c3f97ed0c8f99ad775009751d80023b",
+                "responses": {
+                    "200": {
+                        "description": "User info returned successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "userAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "userAuth": {
+                "type": "apiKey",
+                "description": "Use format: User <username>\\nExample: User admin",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Articles"
+        },
+        {
+            "name": "System",
+            "description": "System"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        }
+    ]
+}

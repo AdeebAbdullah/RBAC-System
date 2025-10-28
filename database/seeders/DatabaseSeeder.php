@@ -48,13 +48,37 @@ class DatabaseSeeder extends Seeder
 
         //articles with its author
         Article::create([
-            'title' => 'Admin Article',
+            'title' => 'Admin Article 1',
             'body' => 'This is an article by admin.',
             'author_id' => $admin->id,
         ]);
 
         Article::create([
-            'title' => 'Editor Article',
+            'title' => 'Admin Article 2',
+            'body' => 'This is an article by admin.',
+            'author_id' => $admin->id,
+        ]);
+
+        Article::create([
+            'title' => 'Admin Article 3',
+            'body' => 'This is an article by admin.',
+            'author_id' => $admin->id,
+        ]);
+
+        Article::create([
+            'title' => 'Editor Article 1',
+            'body' => 'This is an article by editor.',
+            'author_id' => $editor->id,
+        ]);
+
+        Article::create([
+            'title' => 'Editor Article 2',
+            'body' => 'This is an article by editor.',
+            'author_id' => $editor->id,
+        ]);
+
+        Article::create([
+            'title' => 'Editor Article 3',
             'body' => 'This is an article by editor.',
             'author_id' => $editor->id,
         ]);

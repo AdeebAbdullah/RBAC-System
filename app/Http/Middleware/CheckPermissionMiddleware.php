@@ -38,6 +38,13 @@ class CheckPermissionMiddleware
             $articleId = $request->route('id'); // Get {id} from route
             $article = Article::find($articleId);
 
+            // If article doesn't exist → 404 Not Found
+            if (!$article) {
+                return response()->json([
+                    'error' => 'Article Not Found'
+                ], 404);
+            }
+
             // Deny if article not found OR editor is not the author
             if (!$article || $article->author_id !== $user->id) {
                 return response()->json([
@@ -49,9 +56,6 @@ class CheckPermissionMiddleware
             return $next($request);
         }
 
-        if (!in_array($permission, $permissions)) {
-            return response()->json(['error' => 'Forbidden: Permission denied'], 403);
-        }
         // Allow the request to continue
         return $next($request);
     }
