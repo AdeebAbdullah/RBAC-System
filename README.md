@@ -14,11 +14,13 @@ It is a simple Role-Based Access Control (RBAC) system built with Laravel Framew
 - /health for system health check
 - Swagger (add "/api/documentation" after http://127.0.0.1:8000 )
 - feature tests
+- simple react frontend
 
 # Prerequisites
 - PHP >= 8.1
 - Composer
 - MySQL or any supported database
+- Node.js + npm (for frontend) 
 
 # SETUP INSTRUCTION
 - copy .env.example -> .env and adjust database settings if needed.
@@ -29,7 +31,7 @@ It is a simple Role-Based Access Control (RBAC) system built with Laravel Framew
     - php artisan serve
 
 # CURL TEST EXAMPLE IN COMMAND PROMPT
-# ALWAYS DO BEFORE EACH TIME CURL TESTING (fresh migrate+seed and start server)
+# ALWAYS DO BEFORE EACH TIME CURL TESTING (fresh migrate+seed and start server)    ##IMPORTANT
 php artisan migrate:fresh --seed 
 php artisan serve
 
@@ -91,6 +93,24 @@ php artisan test
 - click authorize and close. logout when changing role OR stop using swagger.
 - Can "Try it out" all of API endpoints. 
 - The response should be correct based on user requirements.
+
+# REACT FRONTEND SETUP
+in project terminal :-
+    - cd cdn.frontend
+    - npm install
+    - npm install axios
+    - npm start
+
+# start using frontend
+- LOGIN PAGE : enter "admin" / "ed" / "vi" -> click login. Invalid/missing headers/username show error
+- HOME PAGE :-
+    - headers with welcome and logout button
+    - create article form
+    - article list table with action delete button
+All rules/middleware/controller logic from laravel is applied.
+
+### invoke ###
+
 
 
 
