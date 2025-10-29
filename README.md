@@ -3,12 +3,12 @@
 # overview
 This project was created by Muhammad Adeeb Bin Abdullah. 
 - myadeeb03@gmail.com || 0132849417
-It is a simple Role-Based Access Control (RBAC) system built with Laravel Framework. There are 3 user roles :- 
+- It is a simple Role-Based Access Control (RBAC) system built with Laravel Framework. There are 3 user roles :- 
 - ADMIN (create:article, read:article, delete:article)
 - EDITOR (read:article, create:article, delete only its own article)
 - VIEWER (only read:article)
 # feature 
-- Header-based authentication ('Authorization: User <username>')
+- Header-based authentication ('Authorization: User 'username'')
 - Get, Post, Delete API. 
 - /me to get current authenticated user info
 - /health for system health check
@@ -32,8 +32,8 @@ It is a simple Role-Based Access Control (RBAC) system built with Laravel Framew
 
 # CURL TEST EXAMPLE IN COMMAND PROMPT
 # ALWAYS DO BEFORE EACH TIME CURL TESTING (fresh migrate+seed and start server)    ##IMPORTANT
-php artisan migrate:fresh --seed 
-php artisan serve
+- php artisan migrate:fresh --seed 
+- php artisan serve
 
 # IN COMMAND PROMPT :
 
@@ -96,10 +96,10 @@ php artisan test
 
 # REACT FRONTEND SETUP
 in project terminal :-
-    - cd cdn.frontend
-    - npm install
-    - npm install axios
-    - npm start
+- cd cdn.frontend
+- npm install
+- npm install axios
+- npm start
 
 # start using frontend
 - LOGIN PAGE : enter "admin" / "ed" / "vi" -> click login. Invalid/missing headers/username show error
@@ -109,7 +109,7 @@ in project terminal :-
     - article list table with action delete button
 All rules/middleware/controller logic from laravel is applied.
 
-### invoke ###
+### thankyou ###
 
 
 
