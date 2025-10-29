@@ -83,6 +83,7 @@ This project was created by Muhammad Adeeb Bin Abdullah.
 php artisan test
 
 # SWAGGER 
+- (OPTIONAL) if want to regenerate swagger can use "php artisan l5-swagger:generate" in terminal
 - after "php artisan serve" ctrl + click on http://127.0.0.1:8000
 - add "api/documentation" in url search bar. 
 - should look like this http://127.0.0.1:8000/api/documentation and enter.
