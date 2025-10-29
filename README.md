@@ -1,61 +1,96 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RBAC-System (Laravel 12 + Swagger)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# overview
+This project was created by Muhammad Adeeb Bin Abdullah. 
+- myadeeb03@gmail.com || 0132849417
+It is a simple Role-Based Access Control (RBAC) system built with Laravel Framework. There are 3 user roles :- 
+- ADMIN (create:article, read:article, delete:article)
+- EDITOR (read:article, create:article, delete only its own article)
+- VIEWER (only read:article)
+# feature 
+- Header-based authentication ('Authorization: User <username>')
+- Get, Post, Delete API. 
+- /me to get current authenticated user info
+- /health for system health check
+- Swagger (add "/api/documentation" after http://127.0.0.1:8000 )
+- feature tests
 
-## About Laravel
+# Prerequisites
+- PHP >= 8.1
+- Composer
+- MySQL or any supported database
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# SETUP INSTRUCTION
+- copy .env.example -> .env and adjust database settings if needed.
+- in terminal :- 
+    - composer install
+    - php artisan key:generate
+    - php artisan migrate --seed
+    - php artisan serve
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# CURL TEST EXAMPLE IN COMMAND PROMPT
+# ALWAYS DO BEFORE EACH TIME CURL TESTING (fresh migrate+seed and start server)
+php artisan migrate:fresh --seed 
+php artisan serve
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# IN COMMAND PROMPT :
 
-## Learning Laravel
+# check system health -> 200
+- curl http://localhost:8000/api/health  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# authenticated user info (ADMIN) -> 200
+- curl -H "Authorization: User admin" http://localhost:8000/api/me  
+# authenticated user info (EDITOR) -> 200
+- curl -H "Authorization: User ed" http://localhost:8000/api/me  
+# authenticated user info (VIEWER) ->200
+- curl -H "Authorization: User vi" http://localhost:8000/api/me  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# missing header -> 401
+- curl http://localhost:8000/api/articles   
+# invalid user ->401
+- curl -H "Authorization: User unknown" http://localhost:8000/api/articles  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# viewer read:article, GET : return 200 - retrieved
+- curl -H "Authorization: User vi" http://localhost:8000/api/articles
+# editor read:article, GET : return 200 - retrieved
+- curl -H "Authorization: User ed" http://localhost:8000/api/articles 
+# admin read:article, GET : return 200 - retrieved
+- curl -H "Authorization: User admin" http://localhost:8000/api/articles  
 
-## Laravel Sponsors
+# editor create:article, POST : return 201- created
+- curl -X POST -H "Authorization: User ed" -H "Content-Type: application/json" -d "{\"title\":\"Editor create Article\",\"body\":\"This is article creation testing cURL\"}" http://localhost:8000/api/articles 
+# admin create:article, POST : return 201 - created
+- curl -X POST -H "Authorization: User admin" -H "Content-Type: application/json" -d "{\"title\":\"Admin create Article\",\"body\":\"Hi this is publish by admin\"}" http://localhost:8000/api/articles
+# viewer create:article, POST : return 403 - forbidden
+- curl -X POST -H "Authorization: User vi" -H "Content-Type: application/json" -d "{\"title\":\"Viewer create Article\",\"body\":\"Cannot create\"}" http://localhost:8000/api/articles
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# admin delete:article, DELETE : return 204 - No Content
+- curl -X DELETE -H "Authorization: User admin" http://localhost:8000/api/articles/1 
+# editor delete own article, DELETE  :return 204 - No Content
+- curl -X DELETE -H "Authorization: User ed" http://localhost:8000/api/articles/4
+# editor delete:article(others' article), DELETE : return 403- forbidden
+- curl -X DELETE -H "Authorization: User ed" http://localhost:8000/api/articles/2
+# admin/editor delete non exist article, DELETE : return 404 - Not Found
+- curl -X DELETE -H "Authorization: User ed" http://localhost:8000/api/articles/99
+# viewer delete:article, DELETE : return 403 - forbidden
+- curl -X DELETE -H "Authorization: User vi" http://localhost:8000/api/articles/1
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# FEATURE TESTING (in terminal)
+php artisan test
 
-## Contributing
+# SWAGGER 
+- after "php artisan serve" ctrl + click on http://127.0.0.1:8000
+- add "api/documentation" in url search bar. 
+- should look like this http://127.0.0.1:8000/api/documentation and enter.
+- click on "Authorize" at top right. 
+- enter user header (which user) :- 
+    - User admin
+    - User ed
+    - User vi
+- click authorize and close. logout when changing role OR stop using swagger.
+- Can "Try it out" all of API endpoints. 
+- The response should be correct based on user requirements.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
