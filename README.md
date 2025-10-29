@@ -1,4 +1,4 @@
-# RBAC-System (Laravel 12 + Swagger)
+# RBAC-System (Laravel Framework)
 
 # overview
 This project was created by Muhammad Adeeb Bin Abdullah. 
