@@ -97,11 +97,12 @@ php artisan test
 - The response should be correct based on user requirements.
 
 # REACT FRONTEND SETUP
-in project terminal :-
+open new project terminal (seperated) :-
 - cd cdn.frontend
 - npm install
 - npm install axios
 - npm start
+- MAKE SURE "php artisan serve" is running on project terminal.
 
 # start using frontend
 - LOGIN PAGE : enter "admin" / "ed" / "vi" -> click login. Invalid/missing headers/username show error
