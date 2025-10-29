@@ -28,6 +28,7 @@ This project was created by Muhammad Adeeb Bin Abdullah.
     - composer install
     - php artisan key:generate
     - php artisan migrate --seed
+    - OR php artisan migrate:fresh --seed
     - php artisan serve
 
 # CURL TEST EXAMPLE IN COMMAND PROMPT
