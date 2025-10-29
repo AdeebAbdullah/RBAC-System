@@ -34,6 +34,7 @@ class MeController extends Controller
         }
 
         return response()->json([
+            'id' => $user->id,
             'username'=> $user->username,
             'role'=> $user->role->name,
             'permission'=>array_values($permissions),
